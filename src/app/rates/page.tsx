@@ -2,6 +2,7 @@ import { VOUCHERS } from "@/lib/constants";
 import { prisma } from "@/lib/prisma"; // Direct DB access for Server Component
 import { AlertCircle, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { SubPageHero } from "@/components/SubPageHero";
 
 // Mapping frontend constants IDs to DB VoucherTypes
@@ -171,10 +172,13 @@ const RateSection = ({
             </span>
           </div>
 
-          <button className="w-full py-3 bg-slate-50 border border-slate-200 text-slate-600 font-bold rounded-xl group-hover:bg-indigo-600 group-hover:text-white group-hover:border-transparent transition-all flex items-center justify-center gap-2 relative z-10">
+          <Link
+            href={`/purchase?voucher=${v.id}`}
+            className="w-full py-3 bg-slate-50 border border-slate-200 text-slate-600 font-bold rounded-xl group-hover:bg-indigo-600 group-hover:text-white group-hover:border-transparent transition-all flex items-center justify-center gap-2 relative z-10"
+          >
             판매신청
             <ArrowRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-          </button>
+          </Link>
 
           {/* Background Blob for aesthetics */}
           <div

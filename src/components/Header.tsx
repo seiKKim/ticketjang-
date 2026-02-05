@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { User, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
+import { OrderLookupModal } from "./OrderLookupModal";
+
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLookupModalOpen, setIsLookupModalOpen] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -57,7 +60,10 @@ export function Header() {
           <div className="hidden md:flex items-center gap-2 text-xs text-slate-500 mr-2 bg-indigo-50/50 px-3 py-1 rounded-full border border-indigo-100/50">
             <span>🕒 24시간 연중무휴</span>
           </div>
-          <button className="bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white text-sm font-bold px-5 py-2 rounded-full transition-all shadow-sm hover:shadow-md hidden sm:block">
+          <button
+            onClick={() => setIsLookupModalOpen(true)}
+            className="bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white text-sm font-bold px-5 py-2 rounded-full transition-all shadow-sm hover:shadow-md hidden sm:block"
+          >
             내 주문조회
           </button>
           <button
@@ -102,12 +108,23 @@ export function Header() {
             >
               고객센터 <span className="text-slate-300">›</span>
             </Link>
-            <button className="mt-4 w-full bg-slate-900 text-white py-3 rounded-xl font-bold shadow-lg shadow-slate-200">
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsLookupModalOpen(true);
+              }}
+              className="mt-4 w-full bg-slate-900 text-white py-3 rounded-xl font-bold shadow-lg shadow-slate-200"
+            >
               내 주문조회
             </button>
           </nav>
         </div>
       )}
+
+      <OrderLookupModal
+        isOpen={isLookupModalOpen}
+        onClose={() => setIsLookupModalOpen(false)}
+      />
     </>
   );
 }

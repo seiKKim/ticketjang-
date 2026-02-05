@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Search, X, Loader2, Calendar } from "lucide-react";
+import { Search, X, Loader2, Calendar, CheckSquare, Square } from "lucide-react";
+import { PrivacyPolicyModal } from "./PrivacyPolicyModal";
 
 interface OrderLookupModalProps {
   isOpen: boolean;
@@ -25,12 +26,20 @@ export function OrderLookupModal({ isOpen, onClose }: OrderLookupModalProps) {
   const [results, setResults] = useState<OrderResult[]>([]);
   const [error, setError] = useState("");
 
+  const [agreed, setAgreed] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+
   if (!isOpen) return null;
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) {
       setError("이름과 휴대폰 번호를 모두 입력해주세요.");
+      return;
+    }
+
+    if (!agreed) {
+      setError("개인정보 수집 및 이용에 동의해주세요.");
       return;
     }
 
@@ -81,90 +90,12 @@ export function OrderLookupModal({ isOpen, onClose }: OrderLookupModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-      <div
-        className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden relative"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header with Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors z-10"
-          title="닫기"
+    <>
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+        <div
+          className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden relative"
+          onClick={(e) => e.stopPropagation()}
         >
-          <X className="w-5 h-5" />
-        </button>
-
-        <div className="p-8 pb-6 text-center">
-          <div className="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-            <Search className="w-8 h-8 text-indigo-600" />
-          </div>
-          <h2 className="text-2xl font-black text-slate-900 mb-2">
-            내 주문 조회
-          </h2>
-          <p className="text-slate-500 whitespace-pre-line leading-relaxed text-sm">
-            고객님의 성함과 휴대폰 번호를
-            <br />
-            입력해주세요.
-          </p>
-        </div>
-
-        <div className="px-8 pb-8">
-          <form onSubmit={handleSearch} className="space-y-4">
-            {error && (
-              <div className="bg-red-50 text-red-600 text-xs p-3 rounded-xl font-bold flex items-center justify-center animate-in fade-in slide-in-from-top-1">
-                {error}
-              </div>
-            )}
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-500 ml-1">
-                고객명
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="고객명(예금주)을 입력해주세요."
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-500 ml-1">
-                휴대폰 번호
-              </label>
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) =>
-                  setPhone(e.target.value.replace(/[^0-9-]/g, ""))
-                }
-                placeholder="010-0000-0000"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  조회중...
-                </>
-              ) : (
-                "주문 내역 조회하기"
-              )}
-            </button>
-          </form>
-
-          {/* Search Results Area */}
-          {hasSearched && !loading && (
-            <div className="mt-8 border-t border-slate-100 pt-6 animate-in slide-in-from-bottom-2">
-              <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-slate-400" />
                 최근 1년 주문 내역
               </h3>
 
@@ -227,6 +158,12 @@ export function OrderLookupModal({ isOpen, onClose }: OrderLookupModalProps) {
           )}
         </div>
       </div>
+      
+      <PrivacyPolicyModal 
+        isOpen={isPrivacyModalOpen} 
+        onClose={() => setIsPrivacyModalOpen(false)} 
+      />
     </div>
+    </>
   );
 }

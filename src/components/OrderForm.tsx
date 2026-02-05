@@ -485,6 +485,8 @@ export function OrderForm() {
                   <button
                     onClick={() => setIsBankSelectorOpen(false)}
                     className="p-2 -mr-2 text-slate-400 hover:text-slate-600"
+                    title="닫기"
+                    aria-label="닫기"
                   >
                     <Minus className="rotate-45" size={24} />
                   </button>

@@ -1,6 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect, Suspense } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  Suspense,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { VOUCHERS } from "@/lib/constants";
 
@@ -32,16 +39,18 @@ function PurchaseProviderContent({ children }: { children: ReactNode }) {
   const searchParams = useSearchParams();
   const voucherParam = searchParams.get("voucher");
 
-  const [selectedVoucherId, setSelectedVoucherId] = useState<string | null>(() => {
-    if (voucherParam && VOUCHERS.some(v => v.id === voucherParam)) {
-      return voucherParam;
-    }
-    return VOUCHERS[0]?.id || null;
-  });
+  const [selectedVoucherId, setSelectedVoucherId] = useState<string | null>(
+    () => {
+      if (voucherParam && VOUCHERS.some((v) => v.id === voucherParam)) {
+        return voucherParam;
+      }
+      return VOUCHERS[0]?.id || null;
+    },
+  );
 
-  // Update selection if URL changes while mounted (optional, but good for navigation)
+  // Update selection if URL changes while mounted
   useEffect(() => {
-    if (voucherParam && VOUCHERS.some(v => v.id === voucherParam)) {
+    if (voucherParam && VOUCHERS.some((v) => v.id === voucherParam)) {
       setSelectedVoucherId(voucherParam);
     }
   }, [voucherParam]);
@@ -58,45 +67,7 @@ function PurchaseProviderContent({ children }: { children: ReactNode }) {
 
   const selectVoucher = (id: string) => {
     setSelectedVoucherId(id);
-    // Reset pins when changing voucher type? Maybe keep them if user accidentally clicks.
-    // Let's keep them for better UX.
   };
-
-  const updateBankInfo = (info: Partial<BankInfo>) => {
-    setBankInfo((prev) => ({ ...prev, ...info }));
-  };
-
-  const addPin = () => {
-    setPinCodes((prev) => [...prev, ""]);
-  };
-// ... rest of context
-  return (
-    <PurchaseContext.Provider
-      value={{
-        selectedVoucherId,
-        selectedVoucher,
-        pinCodes,
-        bankInfo,
-        selectVoucher,
-        setPinCodes,
-        updateBankInfo,
-        addPin,
-        removePin,
-        updatePin,
-      }}
-    >
-      {children}
-    </PurchaseContext.Provider>
-  );
-}
-
-export function PurchaseProvider({ children }: { children: ReactNode }) {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PurchaseProviderContent>{children}</PurchaseProviderContent>
-    </Suspense>
-  );
-}
 
   const updateBankInfo = (info: Partial<BankInfo>) => {
     setBankInfo((prev) => ({ ...prev, ...info }));
@@ -138,6 +109,14 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
     >
       {children}
     </PurchaseContext.Provider>
+  );
+}
+
+export function PurchaseProvider({ children }: { children: ReactNode }) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PurchaseProviderContent>{children}</PurchaseProviderContent>
+    </Suspense>
   );
 }
 

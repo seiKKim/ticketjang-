@@ -151,7 +151,7 @@ export default function GuidePage() {
         </div>
 
         {/* FAQ Section */}
-        <div className="max-w-3xl mx-auto space-y-8">
+        <div className="max-w-3xl mx-auto space-y-8 mt-20">
           <h3 className="text-2xl font-bold text-slate-900 text-center">
             자주 묻는 질문
           </h3>

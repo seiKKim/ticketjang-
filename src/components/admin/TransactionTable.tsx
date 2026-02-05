@@ -63,7 +63,6 @@ export function TransactionTable({
 
   return (
     <>
-    <>
       <div className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden">
         {/* Table Toolbar */}
         <div className="p-6 border-b border-slate-100 bg-white flex flex-col sm:flex-row gap-4 justify-between items-center">
@@ -71,18 +70,16 @@ export function TransactionTable({
             <span className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-bold border border-indigo-100">
               Total: {transactions.length}
             </span>
-            <span className="text-slate-400 text-sm">
-              실시간 거래 현황
-            </span>
+            <span className="text-slate-400 text-sm">실시간 거래 현황</span>
           </div>
           {/* Simple Filter Placeholder (Functional implementation later) */}
           <div className="flex gap-2">
-             <button className="px-4 py-2 bg-slate-50 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-100 transition-colors">
-               전체보기
-             </button>
-             <button className="px-4 py-2 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-bold hover:border-indigo-200 hover:text-indigo-600 transition-colors">
-               대기중만 보기
-             </button>
+            <button className="px-4 py-2 bg-slate-50 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-100 transition-colors">
+              전체보기
+            </button>
+            <button className="px-4 py-2 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-bold hover:border-indigo-200 hover:text-indigo-600 transition-colors">
+              대기중만 보기
+            </button>
           </div>
         </div>
 
@@ -93,15 +90,21 @@ export function TransactionTable({
                 <th className="px-6 py-5 whitespace-nowrap">거래 ID</th>
                 <th className="px-6 py-5 whitespace-nowrap">사용자 정보</th>
                 <th className="px-6 py-5 whitespace-nowrap">상품권 종류</th>
-                <th className="px-6 py-5 text-right whitespace-nowrap">지급 금액</th>
-                <th className="px-6 py-5 text-center whitespace-nowrap">진행 상태</th>
-                <th className="px-6 py-5 text-center whitespace-nowrap">관리</th>
+                <th className="px-6 py-5 text-right whitespace-nowrap">
+                  지급 금액
+                </th>
+                <th className="px-6 py-5 text-center whitespace-nowrap">
+                  진행 상태
+                </th>
+                <th className="px-6 py-5 text-center whitespace-nowrap">
+                  관리
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 bg-white">
               {transactions.map((tx) => (
-                <tr 
-                  key={tx.id} 
+                <tr
+                  key={tx.id}
                   className="hover:bg-indigo-50/30 transition-colors group cursor-pointer"
                   onClick={() => setSelectedTx(tx)}
                 >
@@ -132,7 +135,9 @@ export function TransactionTable({
                   <td className="px-6 py-5 text-right">
                     <div className="font-black text-slate-900 text-base">
                       {tx.payoutAmount.toLocaleString()}
-                      <span className="text-xs font-normal text-slate-400 ml-0.5">원</span>
+                      <span className="text-xs font-normal text-slate-400 ml-0.5">
+                        원
+                      </span>
                     </div>
                     <div className="text-[10px] text-slate-400 font-medium bg-slate-50 inline-block px-1.5 py-0.5 rounded mt-1">
                       액면: {tx.totalFaceValue.toLocaleString()}원
@@ -162,11 +167,15 @@ export function TransactionTable({
                     className="px-6 py-20 text-center text-slate-400 bg-slate-50/50"
                   >
                     <div className="flex flex-col items-center gap-2">
-                       <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-2">
-                         <X className="w-5 h-5 text-slate-400" />
-                       </div>
-                       <p className="font-bold text-slate-500">거래 내역이 없습니다.</p>
-                       <p className="text-xs">새로운 거래가 접수되면 이곳에 표시됩니다.</p>
+                      <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-2">
+                        <X className="w-5 h-5 text-slate-400" />
+                      </div>
+                      <p className="font-bold text-slate-500">
+                        거래 내역이 없습니다.
+                      </p>
+                      <p className="text-xs">
+                        새로운 거래가 접수되면 이곳에 표시됩니다.
+                      </p>
                     </div>
                   </td>
                 </tr>
@@ -323,7 +332,8 @@ function StatusBadge({ status }: { status: string }) {
     COMPLETED: "bg-emerald-50 text-emerald-600 border-emerald-100",
     FAILED: "bg-rose-50 text-rose-600 border-rose-100",
     CANCELLED: "bg-slate-100 text-slate-500 border-slate-200",
-    MANUAL_REVIEW: "bg-orange-50 text-orange-600 border-orange-100 animate-pulse",
+    MANUAL_REVIEW:
+      "bg-orange-50 text-orange-600 border-orange-100 animate-pulse",
   };
 
   const dotColors: Record<string, string> = {
@@ -352,7 +362,9 @@ function StatusBadge({ status }: { status: string }) {
     <span
       className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold border shadow-sm ${styles[status] || styles.PENDING}`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${dotColors[status] || "bg-slate-400"}`} />
+      <span
+        className={`w-1.5 h-1.5 rounded-full ${dotColors[status] || "bg-slate-400"}`}
+      />
       {labels[status] || status}
     </span>
   );

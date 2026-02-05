@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(uuid())
+  name          String
+  phoneNumber   String        @unique
+  bankName      String
+  accountNumber String
+  role          Role          @default(USER)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  transactions  Transaction[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+  CORPORATE
+}
+
+model Rate {
+  id          String   @id @default(uuid())
+  voucherType String   @unique // e.g., CULTURE, HAPPY_MONEY, DEPT_STORE
+  buyRate     Float // e.g., 90.0 (percent)
+  isActive    Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+
+  @@map("rates")
+}
+
+model Transaction {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  voucherType    String
+  pinCodes       Json     // Changed to Json for MySQL compatibility
+  totalFaceValue Int
+  feeRate        Float
+  transferFee    Int      @default(500)
+  payoutAmount   Int
+  status         TxStatus @default(PENDING)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  bankName       String?  // Snapshot of user's bank name at time of tx
+  accountNumber  String?  // Snapshot of user's account number
+  accountHolder  String?  // Snapshot of user's name
+  margin         Int      @default(0) // Profit in KRW
+  processedAt    DateTime? // When admin/system approved
+  completedAt    DateTime? // When payout was sent
+
+  @@map("transactions")
+}
+
+enum TxStatus {
+  PENDING           // User initiated
+  VERIFYING         // Automated/Manual checking in progress
+  VERIFIED          // Check passed, waiting for payout
+  TRANSFER_PENDING  // Payout initiated
+  COMPLETED         // Money sent
+  FAILED            // Validation failed
+  CANCELLED         // User cancelled
+  MANUAL_REVIEW     // Admin intervention needed
+}
+
+model Blacklist {
+  id        String    @id @default(uuid())
+  type      BlockType
+  value     String    @unique // Phone number or Account number
+  reason    String?
+  createdAt DateTime  @default(now())
+
+  @@map("blacklist")
+}
+
+enum BlockType {
+  PHONE
+  ACCOUNT
+  IP
+}
+
+model Notice {
+  id          String   @id @default(uuid())
+  title       String
+  content     String   @db.Text
+  category    String   // NOTICE, EVENT
+  isPinned    Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  viewCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("notices")
+}

@@ -56,9 +56,6 @@ export function Footer() {
                 >
                   카카오톡 문의
                 </a>
-                <button className="bg-white text-indigo-600 border border-indigo-100 text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-slate-50 transition-colors shadow-sm">
-                  텔레그램 문의
-                </button>
               </div>
             </div>
             <p className="text-slate-400 text-[11px]">

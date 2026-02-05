@@ -420,6 +420,23 @@ export function OrderForm() {
           )}
         </div>
 
+        {/* Important Notice */}
+        <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 relative z-10">
+          <h4 className="text-xs font-bold text-slate-700 mb-2 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-rose-500" />꼭 알아두세요!
+          </h4>
+          <ul className="text-xs text-slate-500 space-y-1 pl-1">
+            <li className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-slate-300" />
+              신청 건당 이체수수료 500원이 부과됩니다.
+            </li>
+            <li className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-slate-300" />
+              신청이 완료되면 취소 및 환불이 불가합니다.
+            </li>
+          </ul>
+        </div>
+
         {/* 4. Privacy & Submit */}
         <div className="pt-2 space-y-4 relative z-10 border-t border-slate-100 mt-2">
           <div className="flex items-center justify-between">

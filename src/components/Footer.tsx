@@ -48,9 +48,14 @@ export function Footer() {
                 010-2351-3200
               </p>
               <div className="mt-4 flex gap-3">
-                <button className="bg-[#FAE100] text-[#3C1E1E] text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-[#FCE620] transition-colors shadow-sm">
+                <a
+                  href="https://open.kakao.com/o/sBGwZRci/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#FAE100] text-[#3C1E1E] text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-[#FCE620] transition-colors shadow-sm inline-block"
+                >
                   카카오톡 문의
-                </button>
+                </a>
                 <button className="bg-white text-indigo-600 border border-indigo-100 text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-slate-50 transition-colors shadow-sm">
                   텔레그램 문의
                 </button>

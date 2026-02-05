@@ -60,14 +60,19 @@ export default function Home() {
                   </div>
 
                   {/* Kakao Banner */}
-                  <div className="bg-[#FAE100] rounded-2xl p-6 flex items-center justify-center gap-4 shadow-lg shadow-[#FAE100]/30 cursor-pointer hover:bg-[#FCE620] transition-colors group transform hover:-translate-y-1">
+                  <a
+                    href="https://open.kakao.com/o/sBGwZRci/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#FAE100] rounded-2xl p-6 flex items-center justify-center gap-4 shadow-lg shadow-[#FAE100]/30 cursor-pointer hover:bg-[#FCE620] transition-colors group transform hover:-translate-y-1 block"
+                  >
                     <div className="bg-[#3C1E1E] text-[#FAE100] font-bold rounded px-2 py-1 text-xs group-hover:scale-105 transition-transform">
                       TALK
                     </div>
                     <div className="text-[#3C1E1E] font-bold text-lg">
                       카카오톡 상담하기
                     </div>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>

@@ -98,7 +98,12 @@ export default function PurchasePage() {
                 <OrderForm />
 
                 {/* Kakao Banner - Enhanced */}
-                <div className="bg-[#FAE100]/90 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center gap-3 shadow-lg shadow-[#FAE100]/20 cursor-pointer hover:bg-[#FCE620] hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden border border-white/20">
+                <a
+                  href="https://open.kakao.com/o/sBGwZRci/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#FAE100]/90 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center gap-3 shadow-lg shadow-[#FAE100]/20 cursor-pointer hover:bg-[#FCE620] hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden border border-white/20 block"
+                >
                   <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
 
                   <div className="flex items-center gap-2">
@@ -123,7 +128,7 @@ export default function PurchasePage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
           </div>

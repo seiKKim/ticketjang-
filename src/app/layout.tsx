@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "티켓장 | 상품권 자동매입 서비스",
+  title: "당당상품권 자동매입 서비스",
   description: "365일 24시간 상품권 즉시 매입, 5분 내 입금",
 };
 

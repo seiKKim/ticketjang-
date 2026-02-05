@@ -85,6 +85,14 @@ const BANK_DATA = [
   { name: "JP모간", code: "jpmorgan", type: "bank" },
 ];
 
+interface PurchaseResultItem {
+  pin: string;
+  success: boolean;
+  message: string;
+  faceValue?: number;
+  payout?: number;
+}
+
 export function OrderForm() {
   const {
     selectedVoucher,
@@ -182,10 +190,29 @@ export function OrderForm() {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        const results: PurchaseResultItem[] = data.data?.results || [];
+        const successCount = results.filter((r) => r.success).length;
+        const failCount = results.filter((r) => !r.success).length;
         const totalPayout = data.data?.totalPayout || 0;
+
+        let message = `총 ${results.length}건 중 ${successCount}건 매입 성공!\n`;
+        message += `(총 입금 예정금액: ${totalPayout.toLocaleString()}원)\n\n`;
+
+        if (failCount > 0) {
+          message += `[실패 ${failCount}건]\n`;
+          results
+            .filter((r) => !r.success)
+            .forEach((r) => {
+              message += `- ${r.pin}: ${r.message}\n`;
+            });
+          message += `\n성공한 건에 대해서만 5분 내 입금됩니다.`;
+        } else {
+          message += `담당자 확인 후 5분 내 입금됩니다.`;
+        }
+
         openDialog({
-          title: "신청 완료",
-          message: `총 ${validPins.length}건의 상품권 매입 신청이 접수되었습니다.\n(예상 매입금액: ${totalPayout.toLocaleString()}원)\n\n담당자 확인 후 5분 내 입금됩니다.`,
+          title: failCount > 0 ? "신청 결과 (일부 실패)" : "신청 완료",
+          message: message,
           type: "alert",
         });
         setPinCodes([""]);

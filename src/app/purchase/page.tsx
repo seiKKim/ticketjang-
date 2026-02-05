@@ -45,43 +45,43 @@ export default function PurchasePage() {
               <ProductGrid />
 
               {/* Info Box - Enhanced with Glassmorphism */}
-              <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-lg border border-white/50 relative overflow-hidden group hover:shadow-xl transition-all duration-300 ring-1 ring-white/50">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:bg-indigo-100 transition-colors" />
+              <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-white/60 relative overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-indigo-100/40 to-sky-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-60 pointer-events-none" />
 
-                <h3 className="flex items-center gap-2 font-bold text-slate-800 mb-6 text-lg relative z-10">
-                  <div className="bg-indigo-100/50 p-2 rounded-lg backdrop-blur-md">
+                <h3 className="flex items-center gap-3 font-black text-slate-800 mb-8 text-lg relative z-10">
+                  <div className="bg-white p-2.5 rounded-xl shadow-sm border border-indigo-50">
                     <AlertCircle className="w-5 h-5 text-indigo-600" />
                   </div>
                   안전한 거래를 위한 체크포인트
                 </h3>
 
-                <div className="space-y-4 relative z-10">
-                  <div className="flex gap-4 items-start p-4 rounded-2xl bg-white/60 border border-white/50 hover:bg-white hover:border-indigo-100 hover:shadow-md transition-all">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold mt-0.5 shadow-lg shadow-indigo-200">
+                <div className="grid md:grid-cols-2 gap-4 relative z-10">
+                  <div className="flex gap-4 items-start p-5 rounded-2xl bg-white border border-slate-100 hover:border-indigo-200 hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <span className="flex-shrink-0 w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shadow-lg shadow-indigo-200">
                       1
                     </span>
                     <div>
-                      <h4 className="font-bold text-slate-800 text-sm mb-1">
+                      <h4 className="font-bold text-slate-900 text-sm mb-1.5">
                         정확한 정보 입력
                       </h4>
-                      <p className="text-xs text-slate-500 leading-relaxed">
-                        현금교환 신청서는 정확한 정보로 작성해주시기 바랍니다.
-                        잘못된 정보입력으로 인한 책임은 본인에게 있습니다.
+                      <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                        계좌 정보가 일치하지 않으면 입금이 지연될 수 있습니다.
+                        예금주명과 은행을 꼭 확인해주세요.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex gap-4 items-start p-4 rounded-2xl bg-white/60 border border-white/50 hover:bg-white hover:border-indigo-100 hover:shadow-md transition-all">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold mt-0.5 shadow-lg shadow-indigo-200">
+                  <div className="flex gap-4 items-start p-5 rounded-2xl bg-white border border-slate-100 hover:border-indigo-200 hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <span className="flex-shrink-0 w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shadow-lg shadow-indigo-200">
                       2
                     </span>
                     <div>
-                      <h4 className="font-bold text-slate-800 text-sm mb-1">
+                      <h4 className="font-bold text-slate-900 text-sm mb-1.5">
                         매입가 변동 주의
                       </h4>
-                      <p className="text-xs text-slate-500 leading-relaxed">
-                        매입가는 시장 상황에 따라 실시간으로 변동될 수 있습니다.
-                        신청 시점의 시세가 적용됩니다.
+                      <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                        매입가는 시장 상황에 따라 실시간으로 변동됩니다. 신청
+                        완료 시점의 시세가 최종 적용됩니다.
                       </p>
                     </div>
                   </div>

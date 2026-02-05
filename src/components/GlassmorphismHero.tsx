@@ -74,15 +74,15 @@ export function GlassmorphismHero() {
           <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/5">
             <div className="text-center lg:text-left">
               <h3 className="text-white font-bold text-2xl">3min</h3>
-              <p className="text-slate-500 text-sm">Average Time</p>
+              <p className="text-slate-500 text-sm">평균 소요 시간</p>
             </div>
             <div className="text-center lg:text-left">
               <h3 className="text-emerald-400 font-bold text-2xl">24/7</h3>
-              <p className="text-slate-500 text-sm">Always Open</p>
+              <p className="text-slate-500 text-sm">365일 연중무휴</p>
             </div>
             <div className="text-center lg:text-left">
               <h3 className="text-sky-400 font-bold text-2xl">99%</h3>
-              <p className="text-slate-500 text-sm">Satisfaction</p>
+              <p className="text-slate-500 text-sm">고객 만족도</p>
             </div>
           </div>
         </div>

@@ -1,15 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Search,
-  X,
-  Loader2,
-  Calendar,
-  CheckSquare,
-  Square,
-} from "lucide-react";
-import { PrivacyPolicyModal } from "./PrivacyPolicyModal";
+import { Search, X, Loader2, Calendar } from "lucide-react";
 
 interface OrderLookupModalProps {
   isOpen: boolean;
@@ -33,20 +25,12 @@ export function OrderLookupModal({ isOpen, onClose }: OrderLookupModalProps) {
   const [results, setResults] = useState<OrderResult[]>([]);
   const [error, setError] = useState("");
 
-  const [agreed, setAgreed] = useState(false);
-  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
-
   if (!isOpen) return null;
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) {
       setError("이름과 휴대폰 번호를 모두 입력해주세요.");
-      return;
-    }
-
-    if (!agreed) {
-      setError("개인정보 수집 및 이용에 동의해주세요.");
       return;
     }
 
@@ -161,32 +145,9 @@ export function OrderLookupModal({ isOpen, onClose }: OrderLookupModalProps) {
                 />
               </div>
 
-              {/* Privacy Policy Checkbox */}
-              <div className="flex items-center gap-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setAgreed(!agreed)}
-                  className="flex items-center gap-2 text-sm text-slate-600 hover:text-indigo-600 transition-colors"
-                >
-                  {agreed ? (
-                    <CheckSquare className="w-5 h-5 text-indigo-600" />
-                  ) : (
-                    <Square className="w-5 h-5 text-slate-300" />
-                  )}
-                  <span className="font-bold">개인정보 수집에 동의합니다.</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsPrivacyModalOpen(true)}
-                  className="text-xs text-slate-400 underline hover:text-indigo-500"
-                >
-                  내용보기
-                </button>
-              </div>
-
               <button
                 type="submit"
-                disabled={loading || !agreed}
+                disabled={loading}
                 className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
               >
                 {loading ? (
@@ -267,11 +228,6 @@ export function OrderLookupModal({ isOpen, onClose }: OrderLookupModalProps) {
             )}
           </div>
         </div>
-
-        <PrivacyPolicyModal
-          isOpen={isPrivacyModalOpen}
-          onClose={() => setIsPrivacyModalOpen(false)}
-        />
       </div>
     </>
   );

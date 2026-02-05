@@ -14,25 +14,42 @@ export function ProductGrid() {
           <button
             key={v.id}
             onClick={() => selectVoucher(v.id)}
-            className={`flex flex-col items-center justify-center p-6 rounded-2xl border transition-all duration-200 transform hover:scale-[1.03] active:scale-[0.98] ${
+            className={`group relative flex flex-col items-center justify-center p-6 rounded-3xl transition-all duration-300 transform hover:-translate-y-1 ${
               isSelected
-                ? "border-indigo-500 bg-indigo-50 shadow-md ring-2 ring-indigo-200"
-                : "border-slate-100 hover:border-indigo-200 hover:bg-slate-50 hover:shadow-sm"
+                ? "bg-white shadow-xl shadow-indigo-200/50 scale-[1.02] ring-2 ring-indigo-500 ring-offset-2"
+                : "bg-white/80 border border-slate-100/50 hover:bg-white hover:shadow-lg hover:shadow-indigo-100/30"
             }`}
           >
+            {/* Active Gradient Border Effect (Optional visual enhancement) */}
+            {isSelected && (
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-indigo-50/50 to-sky-50/50 opacity-10 pointer-events-none" />
+            )}
+
             <div
-              className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-3 transition-colors ${
+              className={`relative w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 ${
                 isSelected
-                  ? "bg-white shadow-sm"
-                  : "bg-slate-100 group-hover:bg-white"
-              } ${v.color}`}
+                  ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/30 rotate-3"
+                  : "bg-slate-50 text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-500"
+              }`}
             >
-              <v.icon className="w-7 h-7" />
+              <v.icon
+                className={`w-8 h-8 transition-transform duration-300 ${isSelected ? "scale-110" : "scale-100"}`}
+              />
             </div>
-            <span className="font-bold text-slate-800 text-sm mb-1">
+
+            <span
+              className={`font-bold text-sm mb-2 transition-colors ${isSelected ? "text-slate-900" : "text-slate-600 group-hover:text-slate-800"}`}
+            >
               {v.name}
             </span>
-            <span className="text-xs font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded-full">
+
+            <span
+              className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all ${
+                isSelected
+                  ? "bg-indigo-100 text-indigo-700"
+                  : "bg-slate-100 text-slate-500 group-hover:bg-indigo-50 group-hover:text-indigo-600"
+              }`}
+            >
               {v.purchaseRate}
             </span>
           </button>

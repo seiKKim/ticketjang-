@@ -173,19 +173,6 @@ export default function GuidePage() {
               </div>
             ))}
           </div>
-
-          <div className="text-center mt-8">
-            <p className="text-slate-400 text-sm">
-              더 궁금한 점이 있으신가요?{" "}
-              <a
-                href="/cs"
-                className="text-indigo-600 font-bold hover:underline"
-              >
-                고객센터 1:1 문의
-              </a>
-              를 이용해주세요.
-            </p>
-          </div>
         </div>
       </div>
     </div>

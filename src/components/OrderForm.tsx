@@ -417,6 +417,8 @@ export function OrderForm() {
                         <button
                           onClick={() => removePin(idx)}
                           className="w-11 h-[52px] flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 border border-slate-100 hover:border-rose-100 rounded-xl transition-all shrink-0"
+                          title="핀번호 삭제"
+                          aria-label="핀번호 삭제"
                         >
                           <Minus size={18} />
                         </button>

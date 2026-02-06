@@ -61,7 +61,6 @@ export async function POST(request: Request) {
 
     // 4. Create Single Transaction Record for Batch
     // Hardcoded facevalue 50000 for now, should be from voucher type
-    const estimatedFaceValue = 50000;
     const rate = 0.90; 
     
     // Create the main transaction container first
@@ -124,35 +123,34 @@ export async function POST(request: Request) {
       const verification = await PinValidator.verifyPin(voucherType, pin);
       
       if (verification.isValid) {
-        // Calculate item payout
-        const itemPayout = calculatePayout(estimatedFaceValue, rate).finalPayout + 500; // Adding back fee to get gross, logic simplified here
-        // Actually utilize calculatePayout properly per item? 
-        // Let's assume calculatePayout returns total for the batch usually, but here for one item:
-        // Item Value: 50000 -> 90% -> 45000. 
-        // Fee is per Transaction usually, not per item. 
-        // We will sum up the GROSS payout first.
-        const itemGross = estimatedFaceValue * rate;
+        // Use verified face value if available, or 0 if unknown
+        const actualFaceValue = verification.faceValue || 0;
+        
+        // Calculate item payout (Face Value * Rate)
+        // Note: Transfer Fee is applied to the TOTAL transaction, not per item.
+        const itemGross = actualFaceValue * rate;
 
         await prisma.transactionItem.update({
           where: { id: item.id },
           data: { 
             status: "VALID", 
             isVerified: true,
-            faceValue: estimatedFaceValue,
+            faceValue: actualFaceValue,
+            purchaseRate: rate,
             payoutAmount: itemGross 
           }
         });
         
         validCount++;
         totalValidPayout += itemGross;
-        totalFaceValue += estimatedFaceValue;
+        totalFaceValue += actualFaceValue;
 
         results.push({
             pin,
             success: true,
-            faceValue: estimatedFaceValue,
+            faceValue: actualFaceValue,
             payout: itemGross,
-            message: "확인 완료"
+            message: verification.message || "확인 완료"
         });
 
       } else {

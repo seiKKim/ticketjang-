@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 
 // Mock data generator for "Live" feeling
@@ -20,20 +20,16 @@ interface Transaction {
 }
 
 export function LiveTransactionTicker() {
-  const [mounted, setMounted] = useState(false);
-  const [items, setItems] = useState<Transaction[]>([]);
-
-  useEffect(() => {
-    setMounted(true);
-    const initialItems = Array.from({ length: 5 }).map((_, i) => ({
+  // Initialize directly since data is deterministic (safe for SSR)
+  const [items] = useState<Transaction[]>(() =>
+    Array.from({ length: 5 }).map((_, i) => ({
       id: i,
       text: `${NAMES[i % NAMES.length]}님 ${ACTIONS[i % ACTIONS.length]} 완료!`,
       time: TIMES[0],
-    }));
-    setItems(initialItems);
-  }, []);
+    })),
+  );
 
-  if (!mounted) return null;
+  // No longer need mounted check since we don't have hydration mismatch issues
 
   return (
     <div className="bg-slate-900 border-b border-indigo-900/50 text-white h-10 flex items-center overflow-hidden relative z-50">

@@ -26,8 +26,8 @@ export default function Home() {
             </div>
 
             {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-8">
+            <div className="grid lg:grid-cols-5 gap-8">
+              <div className="lg:col-span-3 space-y-8">
                 <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
                   <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                     <span className="w-1.5 h-6 bg-indigo-600 rounded-full" />
@@ -46,7 +46,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="lg:col-span-1">
+              <div className="lg:col-span-2">
                 <div className="sticky top-24 space-y-6">
                   <div className="bg-white rounded-3xl shadow-xl shadow-indigo-100 border border-slate-100 overflow-hidden">
                     <div className="bg-slate-900 px-6 py-4 border-b border-slate-800">

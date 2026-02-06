@@ -2,7 +2,7 @@
  * PinValidator Service
  * Handles validation of voucher pin codes based on type.
  */
-import { VoucherVerifier, MockVerifier } from "../adapters/VoucherAdapter";
+import { VerifierFactory } from "./VerifierFactory";
 
 export class PinValidator {
   private static PATTERNS: Record<string, RegExp> = {
@@ -26,8 +26,8 @@ export class PinValidator {
    * Validates the pin using the configured Adapter.
    */
   static async verifyPin(type: string, pin: string): Promise<{ isValid: boolean; message: string; faceValue?: number }> {
-    // Adapter Pattern: In the future, switch 'MockVerifier' to 'RealVerifier'
-    const verifier: VoucherVerifier = new MockVerifier();
+    // Use Factory to get the correct verifier implementation
+    const verifier = VerifierFactory.getVerifier(type);
     
     const result = await verifier.verify(type, pin);
     

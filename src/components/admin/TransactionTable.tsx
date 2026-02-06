@@ -19,6 +19,7 @@ interface Transaction {
   pinCodes: string[]; // Json type
   bankName?: string;
   accountNumber?: string;
+  items?: any[]; // TransactionItem relation
 }
 
 export function TransactionTable({
@@ -288,31 +289,60 @@ export function TransactionTable({
                 </div>
               </div>
 
-              {/* PIN Codes */}
+              {/* Transaction Items Detail */}
               <div>
                 <label className="text-xs text-slate-500 font-bold mb-3 block">
-                  접수된 핀번호
+                  상품권 상세 내역
                 </label>
                 <div className="space-y-2">
-                  {Array.isArray(selectedTx.pinCodes) &&
-                    selectedTx.pinCodes.map((pin: string, idx: number) => (
-                      <div
-                        key={idx}
-                        className="flex justify-between items-center p-3 border border-slate-200 rounded-lg"
-                      >
-                        <code className="font-mono text-slate-700 font-bold text-lg">
-                          {pin}
-                        </code>
-                        <button
-                          onClick={() => copyToClipboard(pin)}
-                          className="text-slate-400 hover:text-indigo-600"
-                          aria-label="핀번호 복사"
-                          title="핀번호 복사"
+                  {selectedTx.items && selectedTx.items.length > 0
+                    ? selectedTx.items.map((item: any, idx: number) => (
+                        <div
+                          key={idx}
+                          className="flex flex-col p-3 border border-slate-200 rounded-lg gap-2 bg-slate-50/50"
                         >
-                          <Copy className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
+                          <div className="flex justify-between items-center">
+                            <code className="font-mono text-slate-700 font-bold text-base">
+                              {item.pinCode}
+                            </code>
+                            <StatusBadge status={item.status} />
+                          </div>
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="text-slate-500">
+                              액면:{" "}
+                              <span className="font-bold">
+                                {item.faceValue?.toLocaleString()}원
+                              </span>
+                            </span>
+                            <span className="text-slate-500">
+                              매입:{" "}
+                              <span className="font-bold text-indigo-600">
+                                {item.payoutAmount?.toLocaleString()}원
+                              </span>
+                            </span>
+                          </div>
+                          {item.errorMessage && (
+                            <div className="text-[10px] text-rose-500 bg-rose-50 px-2 py-1 rounded">
+                              {item.errorMessage}
+                            </div>
+                          )}
+                        </div>
+                      ))
+                    : // Fallback for old data without items
+                      Array.isArray(selectedTx.pinCodes) &&
+                      selectedTx.pinCodes.map((pin: string, idx: number) => (
+                        <div
+                          key={idx}
+                          className="flex justify-between items-center p-3 border border-slate-200 rounded-lg"
+                        >
+                          <code className="font-mono text-slate-700 font-bold text-lg">
+                            {pin}
+                          </code>
+                          <span className="text-xs text-slate-400">
+                            상세 정보 없음
+                          </span>
+                        </div>
+                      ))}
                 </div>
               </div>
             </div>

@@ -11,6 +11,14 @@ import React, {
 import { useSearchParams } from "next/navigation";
 import { VOUCHERS } from "@/lib/constants";
 
+export interface PinItem {
+  code: string;
+  status: "idle" | "loading" | "success" | "error";
+  message?: string;
+  isVerified: boolean;
+  faceValue?: number;
+}
+
 interface BankInfo {
   bankName: string;
   accountNumber: string;
@@ -21,14 +29,15 @@ interface BankInfo {
 interface PurchaseContextType {
   selectedVoucherId: string | null;
   selectedVoucher: (typeof VOUCHERS)[0] | undefined;
-  pinCodes: string[];
+  pinItems: PinItem[];
   bankInfo: BankInfo;
   selectVoucher: (id: string) => void;
-  setPinCodes: (codes: string[]) => void;
+  setPinItems: (items: PinItem[]) => void;
   updateBankInfo: (info: Partial<BankInfo>) => void;
   addPin: () => void;
   removePin: (index: number) => void;
-  updatePin: (index: number, value: string) => void;
+  updatePinCode: (index: number, code: string) => void;
+  updatePinStatus: (index: number, updates: Partial<PinItem>) => void;
 }
 
 const PurchaseContext = createContext<PurchaseContextType | undefined>(
@@ -55,7 +64,14 @@ function PurchaseProviderContent({ children }: { children: ReactNode }) {
     }
   }, [voucherParam]);
 
-  const [pinCodes, setPinCodes] = useState<string[]>([""]); // Start with 1 empty pin
+  const [pinItems, setPinItems] = useState<PinItem[]>([
+    {
+      code: "",
+      status: "idle",
+      isVerified: false,
+    },
+  ]);
+
   const [bankInfo, setBankInfo] = useState<BankInfo>({
     bankName: "",
     accountNumber: "",
@@ -67,6 +83,7 @@ function PurchaseProviderContent({ children }: { children: ReactNode }) {
 
   const selectVoucher = (id: string) => {
     setSelectedVoucherId(id);
+    setPinItems([{ code: "", status: "idle", isVerified: false }]);
   };
 
   const updateBankInfo = (info: Partial<BankInfo>) => {
@@ -74,22 +91,42 @@ function PurchaseProviderContent({ children }: { children: ReactNode }) {
   };
 
   const addPin = () => {
-    setPinCodes((prev) => [...prev, ""]);
+    setPinItems((prev) => [
+      ...prev,
+      { code: "", status: "idle", isVerified: false },
+    ]);
   };
 
   const removePin = (index: number) => {
-    if (pinCodes.length === 1) {
+    if (pinItems.length === 1) {
       // Don't remove the last one, just clear it
-      updatePin(0, "");
+      updatePinCode(0, "");
       return;
     }
-    setPinCodes((prev) => prev.filter((_, i) => i !== index));
+    setPinItems((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const updatePin = (index: number, value: string) => {
-    const newPins = [...pinCodes];
-    newPins[index] = value;
-    setPinCodes(newPins);
+  const updatePinCode = (index: number, code: string) => {
+    setPinItems((prev) => {
+      const newItems = [...prev];
+      newItems[index] = {
+        ...newItems[index],
+        code,
+        // Reset status if changed
+        status: "idle",
+        isVerified: false,
+        message: undefined,
+      };
+      return newItems;
+    });
+  };
+
+  const updatePinStatus = (index: number, updates: Partial<PinItem>) => {
+    setPinItems((prev) => {
+      const newItems = [...prev];
+      newItems[index] = { ...newItems[index], ...updates };
+      return newItems;
+    });
   };
 
   return (
@@ -97,14 +134,15 @@ function PurchaseProviderContent({ children }: { children: ReactNode }) {
       value={{
         selectedVoucherId,
         selectedVoucher,
-        pinCodes,
+        pinItems,
         bankInfo,
         selectVoucher,
-        setPinCodes,
+        setPinItems,
         updateBankInfo,
         addPin,
         removePin,
-        updatePin,
+        updatePinCode,
+        updatePinStatus,
       }}
     >
       {children}

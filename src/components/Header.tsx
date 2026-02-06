@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { OrderLookupModal } from "./OrderLookupModal";
 
@@ -12,6 +12,28 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLookupModalOpen, setIsLookupModalOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleAdminExit = async (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetHref: string,
+  ) => {
+    if (pathname?.startsWith("/admin")) {
+      e.preventDefault();
+      // Optional: Add confirm dialog? "관리자 모드를 종료하시겠습니까?"
+      // User requested "Unable to verify immediately" -> implies force logout without asking?
+      // Or maybe just force logout silently.
+
+      try {
+        await fetch("/api/admin/logout", { method: "POST" });
+        router.replace(targetHref); // Replace history to prevent easy back
+        router.refresh(); // Refresh to ensure middleware re-runs or client state clears
+      } catch (error) {
+        console.error("Logout failed", error);
+        router.push(targetHref);
+      }
+    }
+  };
 
   return (
     <>
@@ -19,7 +41,7 @@ export function Header() {
         <div className="flex items-center gap-12">
           <Link
             href="/"
-            replace={pathname?.startsWith("/admin")}
+            onClick={(e) => handleAdminExit(e, "/")}
             className="flex items-center gap-1"
           >
             <Image
@@ -34,21 +56,21 @@ export function Header() {
           <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
             <Link
               href="/rates"
-              replace={pathname?.startsWith("/admin")}
+              onClick={(e) => handleAdminExit(e, "/rates")}
               className="hover:text-primary transition-colors"
             >
               시세표
             </Link>
             <Link
               href="/guide"
-              replace={pathname?.startsWith("/admin")}
+              onClick={(e) => handleAdminExit(e, "/guide")}
               className="hover:text-primary transition-colors"
             >
               이용안내
             </Link>
             <Link
               href="/cs"
-              replace={pathname?.startsWith("/admin")}
+              onClick={(e) => handleAdminExit(e, "/cs")}
               className="hover:text-primary transition-colors"
             >
               고객센터
@@ -86,25 +108,31 @@ export function Header() {
           <nav className="flex flex-col gap-6 text-lg font-medium text-slate-800">
             <Link
               href="/rates"
-              replace={pathname?.startsWith("/admin")}
+              onClick={(e) => {
+                setIsMobileMenuOpen(false);
+                handleAdminExit(e, "/rates");
+              }}
               className="py-2 border-b border-slate-100 flex justify-between items-center"
-              onClick={() => setIsMobileMenuOpen(false)}
             >
               시세표 <span className="text-slate-300">›</span>
             </Link>
             <Link
               href="/guide"
-              replace={pathname?.startsWith("/admin")}
+              onClick={(e) => {
+                setIsMobileMenuOpen(false);
+                handleAdminExit(e, "/guide");
+              }}
               className="py-2 border-b border-slate-100 flex justify-between items-center"
-              onClick={() => setIsMobileMenuOpen(false)}
             >
               이용안내 <span className="text-slate-300">›</span>
             </Link>
             <Link
               href="/cs"
-              replace={pathname?.startsWith("/admin")}
+              onClick={(e) => {
+                setIsMobileMenuOpen(false);
+                handleAdminExit(e, "/cs");
+              }}
               className="py-2 border-b border-slate-100 flex justify-between items-center"
-              onClick={() => setIsMobileMenuOpen(false)}
             >
               고객센터 <span className="text-slate-300">›</span>
             </Link>

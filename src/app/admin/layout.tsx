@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import {
   LayoutDashboard,
   Receipt,
@@ -6,12 +9,15 @@ import {
   Settings,
   Megaphone,
 } from "lucide-react";
+import { ChangePasswordModal } from "@/components/admin/ChangePasswordModal";
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans text-slate-900">
       {/* Sidebar - Professional Dark Theme */}
@@ -27,6 +33,28 @@ export default function AdminLayout({
               ADMIN
             </span>
           </h1>
+        </div>
+
+        {/* User Profile / Logout (Moved to Top) */}
+        <div className="p-4 bg-[#1e293b] border-b border-slate-800/50">
+          <div
+            onClick={() => setIsPasswordModalOpen(true)}
+            className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group"
+            title="비밀번호 변경"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-600 flex items-center justify-center border border-white/10 group-hover:border-indigo-500/50 transition-colors">
+              <span className="font-bold text-white text-sm">MG</span>
+            </div>
+            <div>
+              <div className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">
+                Manager
+              </div>
+              <div className="text-xs text-slate-500 flex items-center gap-1">
+                Super Admin
+                <Settings className="w-3 h-3 group-hover:animate-spin" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Navigation */}
@@ -60,27 +88,18 @@ export default function AdminLayout({
             label="고객센터"
           />
         </nav>
-
-        {/* User Profile / Logout (Visual Only) */}
-        <div className="p-4 bg-[#0f172a] border-t border-slate-800/50">
-          <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-600 flex items-center justify-center border border-white/10 group-hover:border-indigo-500/50 transition-colors">
-              <span className="font-bold text-white text-sm">MG</span>
-            </div>
-            <div>
-              <div className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">
-                Manager
-              </div>
-              <div className="text-xs text-slate-500">Super Admin</div>
-            </div>
-          </div>
-        </div>
       </aside>
 
       {/* Main Content */}
       <main className="flex-1 md:ml-72 p-8 transition-all duration-300">
         {children}
       </main>
+
+      {/* Modals */}
+      <ChangePasswordModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+      />
     </div>
   );
 }

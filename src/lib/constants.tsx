@@ -23,6 +23,20 @@ export function BookIcon(props: ComponentProps<"svg">) {
 
 export const VOUCHERS = [
   {
+    id: "starbucks",
+    name: "스타벅스\ne카드 교환권",
+    validatorCode: "STARBUCKS",
+    icon: Gift,
+    imagePath: "/images/icons/starbucks.png",
+    category: "mobile",
+    color: "text-green-600 bg-green-50",
+    purchaseRate: "91%",
+    listPrice: "91%",
+    fee: "9%",
+    status: "매입중",
+    pinSegments: [4, 4, 4, 4, 8],
+  },
+  {
     id: "culture",
     name: "컬쳐랜드(16핀)",
     validatorCode: "CULTURE_LAND",
@@ -146,19 +160,5 @@ export const VOUCHERS = [
     fee: "7%",
     status: "매입중",
     pinSegments: [4, 4, 4, 4],
-  },
-  {
-    id: "starbucks",
-    name: "스타벅스\ne카드 교환권",
-    validatorCode: "STARBUCKS",
-    icon: Gift,
-    imagePath: "/images/icons/starbucks.png",
-    category: "mobile",
-    color: "text-green-600 bg-green-50",
-    purchaseRate: "91%",
-    listPrice: "91%",
-    fee: "9%",
-    status: "매입중",
-    pinSegments: [4, 4, 4, 4, 8],
   },
 ];

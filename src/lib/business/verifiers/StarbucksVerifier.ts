@@ -7,6 +7,7 @@ export class StarbucksVerifier implements VoucherVerifier {
     console.log(`[Starbucks] Verifying PIN via Puppeteer`);
 
     let browser = null;
+    let faceValue = 0;
     try {
       browser = await puppeteer.launch({
         headless: true,

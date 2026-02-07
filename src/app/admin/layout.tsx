@@ -8,6 +8,7 @@ import {
   BarChart3,
   Settings,
   Megaphone,
+  Coffee,
 } from "lucide-react";
 import { ChangePasswordModal } from "@/components/admin/ChangePasswordModal";
 
@@ -86,6 +87,12 @@ export default function AdminLayout({
             href="/admin/cs"
             icon={<Megaphone className="w-5 h-5" />}
             label="고객센터"
+          />
+          <NavLink
+            href="/admin/starbucks"
+            icon={<Coffee className="w-5 h-5" />}
+            label="스타벅스 조회"
+            badge="New"
           />
         </nav>
       </aside>

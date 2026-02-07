@@ -26,15 +26,27 @@ export function ProductGrid() {
             )}
 
             <div
-              className={`relative w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 ${
+              className={`relative w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 overflow-hidden ${
                 isSelected
                   ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/30 rotate-3"
                   : "bg-slate-50 text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-500"
               }`}
             >
-              <v.icon
-                className={`w-8 h-8 transition-transform duration-300 ${isSelected ? "scale-110" : "scale-100"}`}
-              />
+              {v.imagePath ? (
+                <img
+                  src={v.imagePath}
+                  alt={v.name}
+                  className={`w-full h-full object-cover transition-transform duration-300 ${
+                    isSelected ? "scale-110" : "scale-100"
+                  }`}
+                />
+              ) : (
+                <v.icon
+                  className={`w-8 h-8 transition-transform duration-300 ${
+                    isSelected ? "scale-110" : "scale-100"
+                  }`}
+                />
+              )}
             </div>
 
             <span

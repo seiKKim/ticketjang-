@@ -271,9 +271,17 @@ export function OrderForm() {
           {selectedVoucher ? (
             <>
               <div
-                className={`w-14 h-14 rounded-2xl flex items-center justify-center ${selectedVoucher.color} shadow-sm shadow-indigo-200/50 ring-4 ring-white`}
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center ${selectedVoucher.color} shadow-sm shadow-indigo-200/50 ring-4 ring-white overflow-hidden`}
               >
-                <selectedVoucher.icon className="w-7 h-7" />
+                {selectedVoucher.imagePath ? (
+                  <img
+                    src={selectedVoucher.imagePath}
+                    alt={selectedVoucher.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <selectedVoucher.icon className="w-7 h-7" />
+                )}
               </div>
               <div>
                 <span className="text-xs font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded-md mb-1 inline-block">

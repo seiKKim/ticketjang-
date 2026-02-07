@@ -23,71 +23,7 @@ import { createPortal } from "react-dom";
 import { SegmentedPinInput } from "./inputs/SegmentedPinInput";
 import { PrivacyPolicyModal } from "./PrivacyPolicyModal";
 
-// --- Bank Data with Categories ---
-const BANK_DATA = [
-  // Major & Internet (Bank)
-  { name: "카카오뱅크", code: "kakao", type: "bank" },
-  { name: "KB국민", code: "kb", type: "bank" },
-  { name: "신한", code: "shinhan", type: "bank" },
-  { name: "우리", code: "woori", type: "bank" },
-  { name: "하나", code: "hana", type: "bank" },
-  { name: "NH농협", code: "nh", type: "bank" },
-  { name: "IBK기업", code: "ibk", type: "bank" },
-  { name: "토스뱅크", code: "toss", type: "bank" },
-  { name: "케이뱅크", code: "kbank", type: "bank" },
-  { name: "SC제일", code: "sc", type: "bank" },
-  { name: "한국씨티", code: "citi", type: "bank" },
-  { name: "KDB산업", code: "kdb", type: "bank" },
-
-  // Local (Bank)
-  { name: "iM뱅크(대구)", code: "daegu", type: "bank" },
-  { name: "부산", code: "busan", type: "bank" },
-  { name: "경남", code: "kyongnam", type: "bank" },
-  { name: "광주", code: "gwangju", type: "bank" },
-  { name: "전북", code: "jeonbuk", type: "bank" },
-  { name: "제주", code: "jeju", type: "bank" },
-
-  // Others (Bank)
-  { name: "우체국", code: "post", type: "bank" },
-  { name: "새마을금고", code: "kfcc", type: "bank" },
-  { name: "신협", code: "cu", type: "bank" },
-  { name: "수협", code: "suhyup", type: "bank" },
-  { name: "저축은행", code: "sb", type: "bank" },
-  { name: "산림조합", code: "sj", type: "bank" },
-
-  // Securities
-  { name: "키움증권", code: "kiwoom", type: "security" },
-  { name: "미래에셋", code: "mirae", type: "security" },
-  { name: "삼성증권", code: "samsung", type: "security" },
-  { name: "한국투자", code: "koreainv", type: "security" },
-  { name: "NH투자", code: "nhinv", type: "security" },
-  { name: "KB증권", code: "kbinv", type: "security" },
-  { name: "카카오페이", code: "kakaopay", type: "security" },
-  { name: "토스증권", code: "tosssec", type: "security" },
-  { name: "신한투자", code: "shinhaninv", type: "security" },
-  { name: "하나증권", code: "hanainv", type: "security" },
-  { name: "현대차", code: "hyundai", type: "security" },
-  { name: "대신증권", code: "daishin", type: "security" },
-  { name: "메리츠", code: "meritz", type: "security" },
-  { name: "유안타", code: "yuanta", type: "security" },
-  { name: "유진투자", code: "eugene", type: "security" },
-  { name: "한화투자", code: "hanwha", type: "security" },
-  { name: "DB금융", code: "db", type: "security" },
-  { name: "교보증권", code: "kyobo", type: "security" },
-  { name: "부국증권", code: "bookook", type: "security" },
-  { name: "신영증권", code: "shinyoung", type: "security" },
-  { name: "SK증권", code: "sk", type: "security" },
-  { name: "케이프", code: "cape", type: "security" },
-  { name: "BNK투자", code: "bnkinv", type: "security" },
-  { name: "IBK투자", code: "ibkinv", type: "security" },
-
-  // Foreign (Bank) - Put at end of bank list logic or separate
-  { name: "도이치", code: "deutsche", type: "bank" },
-  { name: "중국공상", code: "icbc", type: "bank" },
-  { name: "중국", code: "boc", type: "bank" },
-  { name: "HSBC", code: "hsbc", type: "bank" },
-  { name: "JP모간", code: "jpmorgan", type: "bank" },
-];
+import { BANK_DATA } from "@/lib/portone";
 
 interface PurchaseResultItem {
   pin: string;

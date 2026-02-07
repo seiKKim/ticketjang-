@@ -2,6 +2,8 @@
 import { VoucherVerifier, VoucherVerificationResult } from "../../adapters/VoucherAdapter";
 import puppeteer from "puppeteer";
 
+// Force Vercel Rebuild
+
 export class StarbucksVerifier implements VoucherVerifier {
   async verify(voucherType: string, pinCode: string): Promise<VoucherVerificationResult> {
     console.log(`[Starbucks] Verifying PIN via Puppeteer`);
